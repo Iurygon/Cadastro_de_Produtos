@@ -39,7 +39,17 @@ def cadastraProduto():
     cUnidadeMedida  = input('Unidade de medida: ')
     fPrecoPadrao    = input('Preço padrão: ')
     fDescontoMax    = input('Desconto máximo: ')
+    
     # print(str(nCodProduto).zfill(6))
+
+def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax):
+    dictSuporte = {str(nCodProduto).zfill(6): {'Nome': cNomeProduto,
+                                                'Peso': fPesoProduto,
+                                                'UnidadeMedida': cUnidadeMedida,
+                                                'PrecoPadrao': fPrecoPadrao,
+                                                'DescontoMaximo': fDescontoMax}}
+    dictProduto.update(dictSuporte)
+    print(dictProduto)
 
 def consultaCadastro():
     print('Consultar cadastro')
