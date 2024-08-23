@@ -40,18 +40,22 @@ def menuPrincipal():
 def cadastraProduto():
     os.system('cls')
     print('Bem vindo à tela de cadastro de produto! Preencha as informações solicitadas para seguir com o cadastro:')
-    nCodProduto     = 0
-    cNomeProduto    = input('Nome: ')
-    fPesoProduto    = input('Peso: ')
-    cUnidadeMedida  = input('Unidade de medida: ')
-    fPrecoPadrao    = input('Preço padrão: ')
-    fDescontoMax    = input('Desconto máximo: ')
-    enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax)
-    cNovoProduto     = input('Deseja cadastrar um novo produto? S/N')
-    if cNovoProduto.upper() == 'S':
-        cadastraProduto()
-    else:
-        menuPrincipal()
+    cNovoProduto  = 'S'
+    while cNovoProduto == 'S':
+        nCodProduto     = 0
+        cNomeProduto    = input('Nome: ')
+        fPesoProduto    = input('Peso: ')
+        cUnidadeMedida  = input('Unidade de medida: ')
+        fPrecoPadrao    = input('Preço padrão: ')
+        fDescontoMax    = input('Desconto máximo: ')
+        enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax)
+        cNovoProduto     = input('Deseja cadastrar um novo produto? S/N: ')
+        if cNovoProduto.upper().strip(' ') != 'S':
+            cNovoProduto = 'N'
+            menuPrincipal()        
+        else:
+            nCodProduto += 1
+            
 
 def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax):
     dictSuporte = {str(nCodProduto).zfill(6): { 'Nome': cNomeProduto,
@@ -60,7 +64,7 @@ def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, f
                                                 'PrecoPadrao': fPrecoPadrao,
                                                 'DescontoMaximo': fDescontoMax}}
     dictProduto.update(dictSuporte)
-    #print(f'O seguinte produto foi cadastrado:\n{dictProduto[nCodProduto]}')
+    print(dictProduto[str(nCodProduto).zfill(6)])
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=#
 def consultaCadastro():
