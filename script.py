@@ -26,29 +26,26 @@ def menuPrincipal():
         '2 - Consultar dados de produto\n'
         '3 - Excluir produto cadastrado\n'
         '4 - Sair do programa')
-    try:
-        nOpcaoMenu = int(input('Selecione qual opção deseja seguir: '))
-        match nOpcaoMenu:
-            case 1: cadastraProduto()
-            case 2: consultaCadastro()
-            case 3: excluiProduto()
-            case 4: sairPrograma()
-    except:
-        print('O valor digitado deve estar entre as opções disponíveis')
+    nOpcaoMenu = int(input('Selecione qual opção deseja seguir: '))
+    match nOpcaoMenu:
+        case 1: cadastraProduto()
+        case 2: consultaCadastro()
+        case 3: excluiProduto()
+        case 4: sairPrograma()
 
 #=-=-=-=-=-=-=-=-=-=CADASTRO DE PRODUTO=-=-=-=-=-=-=-=-=-=#
 def cadastraProduto():
     os.system('cls')
     print('Bem vindo à tela de cadastro de produto! Preencha as informações solicitadas para seguir com o cadastro:')
     cNovoProduto  = 'S'
+    nCodProduto   = 0
     while cNovoProduto == 'S':
-        nCodProduto     = 0
         cNomeProduto    = input('Nome: ')
         fPesoProduto    = input('Peso: ')
         cUnidadeMedida  = input('Unidade de medida: ')
         fPrecoPadrao    = input('Preço padrão: ')
         fDescontoMax    = input('Desconto máximo: ')
-        enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax)
+        enviaDadosProduto(str(nCodProduto).zfill(6), cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax)
         cNovoProduto     = input('Deseja cadastrar um novo produto? S/N: ')
         if cNovoProduto.upper().strip(' ') != 'S':
             cNovoProduto = 'N'
@@ -58,13 +55,13 @@ def cadastraProduto():
             
 
 def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax):
-    dictSuporte = {str(nCodProduto).zfill(6): { 'Nome': cNomeProduto,
-                                                'Peso': fPesoProduto,
-                                                'UnidadeMedida': cUnidadeMedida,
-                                                'PrecoPadrao': fPrecoPadrao,
-                                                'DescontoMaximo': fDescontoMax}}
+    dictSuporte = {nCodProduto: {   'Nome': cNomeProduto,
+                                    'Peso': fPesoProduto,
+                                    'UnidadeMedida': cUnidadeMedida,
+                                    'PrecoPadrao': fPrecoPadrao,
+                                    'DescontoMaximo': fDescontoMax}}
     dictProduto.update(dictSuporte)
-    print(dictProduto[str(nCodProduto).zfill(6)])
+    print(f'Cadastro realizado para o produto com código {nCodProduto}\n{dictProduto[nCodProduto]}')
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=#
 def consultaCadastro():
