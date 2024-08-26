@@ -1,4 +1,5 @@
 import os
+import time
 '''
 VARIÁVEIS
 
@@ -14,6 +15,7 @@ dictSuporte     -> Recebe as informações que serão inseridas do produto
                    e envia para o dicionário principal                      (Dicionário) 
 cNovoProduto    -> Define se, no cadastro de produto, o usuário irá fazer
                    um novo cadastro ou voltar ao menu principal             (Caractere)
+nRemoveProduto  -> Indica qual produto será excluído do dicionário          (Caractere)
 '''
 
 dictProduto = {}
@@ -26,12 +28,17 @@ def menuPrincipal():
         '2 - Consultar dados de produto\n'
         '3 - Excluir produto cadastrado\n'
         '4 - Sair do programa')
-    nOpcaoMenu = int(input('Selecione qual opção deseja seguir: '))
-    match nOpcaoMenu:
-        case 1: cadastraProduto()
-        case 2: consultaCadastro()
-        case 3: excluiProduto()
-        case 4: sairPrograma()
+    try:
+        nOpcaoMenu = int(input('Selecione qual opção deseja seguir: '))
+        match nOpcaoMenu:
+            case 1: cadastraProduto()
+            case 2: consultaCadastro()
+            case 3: excluiProduto()
+            case 4: sairPrograma()
+    except ValueError:
+        print('O valor digitado deve estar entre as opções listadas.')
+        time.sleep(3)
+        menuPrincipal()
 
 #=-=-=-=-=-=-=-=-=-=CADASTRO DE PRODUTO=-=-=-=-=-=-=-=-=-=#
 def cadastraProduto():
@@ -63,14 +70,22 @@ def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, f
     dictProduto.update(dictSuporte)
     print(f'Cadastro realizado para o produto com código {nCodProduto}\n{dictProduto[nCodProduto]}')
 
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=#
+#=-=-=-=-=-=-=-=-=-=CONSULTA DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def consultaCadastro():
-    print('Bem vindo à tela de consulta dos produtos!')
+    os.system('cls')
+    print('Bem vindo à tela de consulta dos produtos!\n Os seguintes produtos estão cadastrados:')
     print(dictProduto)
 
+#=-=-=-=-=-=-=-=-=-=EXCLUSÃO DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def excluiProduto():
-    print('Excluir produto')
-    
+    os.system('cls')
+    print('Bem vindo à tela de exclusão de produtos!\n Os seguintes produtos estão cadastrados:')
+    print(dictProduto)
+    removeProduto = str(input('Digite o código do produto que deverá ser excluído: ')).zfill(6)
+    print('Feita a exclusão do produto:')
+    dictProduto.pop(removeProduto)
+
+#=-=-=-=-=-=-=-=-=-=EXCLUSÃO DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def sairPrograma():
     os.system('cls')
     print('Programa encerrado!')
