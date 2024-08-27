@@ -16,9 +16,13 @@ dictSuporte     -> Recebe as informações que serão inseridas do produto
 cNovoProduto    -> Define se, no cadastro de produto, o usuário irá fazer
                    um novo cadastro ou voltar ao menu principal             (Caractere)
 nRemoveProduto  -> Indica qual produto será excluído do dicionário          (Caractere)
+cAlteraRegistro -> Verifica se será feita uma atualização em algum dos 
+                   dados de um dos produtos                                 (Caractere)
+cChaveProduto   -> Recebe a chave do produto que será alterado na função
+                   'alterarProdutos'                                        (Caractere)
 '''
 
-dictProduto = {}
+dictProduto = {'000000': {'Nome': 'Bala', 'Peso': '50', 'UnidadeMedida': 'Uni', 'PrecoPadrao': '0.5', 'DescontoMaximo': '0'}, '000001': {'Nome': 'Chiclete', 'Peso': '40', 'UnidadeMedida': 'Uni', 'PrecoPadrao': '0.4', 'DescontoMaximo': '0'}, '000002': {'Nome': 'Brigadeiro', 'Peso': '1000', 'UnidadeMedida': 'Kg', 'PrecoPadrao': '5.0', 'DescontoMaximo': '15'}}
 
 #=-=-=-=-=-=-=-=-=-=MENU PRINCIPAL=-=-=-=-=-=-=-=-=-=#
 def menuPrincipal():
@@ -37,7 +41,7 @@ def menuPrincipal():
             case 4: sairPrograma()
     except ValueError:
         print('O valor digitado deve estar entre as opções listadas.')
-        time.sleep(3)
+        time.sleep(2)
         menuPrincipal()
 
 #=-=-=-=-=-=-=-=-=-=CADASTRO DE PRODUTO=-=-=-=-=-=-=-=-=-=#
@@ -46,7 +50,7 @@ def cadastraProduto():
     print('Bem vindo à tela de cadastro de produto! Preencha as informações solicitadas para seguir com o cadastro:')
     cNovoProduto  = 'S'
     nCodProduto   = 0
-    while cNovoProduto == 'S':
+    while cNovoProduto.upper() == 'S':
         cNomeProduto    = input('Nome: ')
         fPesoProduto    = input('Peso: ')
         cUnidadeMedida  = input('Unidade de medida: ')
@@ -62,32 +66,56 @@ def cadastraProduto():
             
 
 def enviaDadosProduto(nCodProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax):
-    dictSuporte = {nCodProduto: {   'Nome': cNomeProduto,
-                                    'Peso': fPesoProduto,
-                                    'UnidadeMedida': cUnidadeMedida,
-                                    'PrecoPadrao': fPrecoPadrao,
-                                    'DescontoMaximo': fDescontoMax}}
+    dictSuporte = {nCodProduto: {   'Nome': cNomeProduto.ljust(20),
+                                    'Peso': fPesoProduto.ljust(6),
+                                    'UnidadeMedida': cUnidadeMedida.ljust(4),
+                                    'PrecoPadrao': fPrecoPadrao.ljust(5),
+                                    'DescontoMaximo': fDescontoMax.ljust(2)}}
     dictProduto.update(dictSuporte)
     print(f'Cadastro realizado para o produto com código {nCodProduto}\n{dictProduto[nCodProduto]}')
 
 #=-=-=-=-=-=-=-=-=-=CONSULTA DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def consultaCadastro():
     os.system('cls')
-    print('Bem vindo à tela de consulta dos produtos!\n Os seguintes produtos estão cadastrados:')
-    print(dictProduto)
+    print('Bem vindo à tela de consulta dos produtos!\nOs seguintes produtos estão cadastrados:')
+    for chave in dictProduto.keys():
+        print(f'{chave}: {dictProduto[chave]}')
+    cAlteraRegistro = input('Deseja alterar alguma informação dos produtos? S/N')
+    if cAlteraRegistro.upper() == 'S':
+        alterarRegistros()
+    else:
+        menuPrincipal()
+
+def alterarRegistros():
+    cChaveProduto = input('Insira o código do produto que deverá ser alterado?')
+    print(f'O produto está com os seguintes dados cadastrados:\n{dictProduto[cChaveProduto]}\nInsira os novos valores:')
+    cNomeProduto    = input('Nome: ')
+    fPesoProduto    = input('Peso: ')
+    cUnidadeMedida  = input('Unidade de medida: ')
+    fPrecoPadrao    = input('Preço padrão: ')
+    fDescontoMax    = input('Desconto máximo: ')
+    enviaDadosProduto(cChaveProduto, cNomeProduto, fPesoProduto, cUnidadeMedida, fPrecoPadrao, fDescontoMax)
+    print('Produto alterado!')
+    input('Pressione uma tecla para seguir:')
+    menuPrincipal()
 
 #=-=-=-=-=-=-=-=-=-=EXCLUSÃO DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def excluiProduto():
     os.system('cls')
     print('Bem vindo à tela de exclusão de produtos!\n Os seguintes produtos estão cadastrados:')
-    print(dictProduto)
-    removeProduto = str(input('Digite o código do produto que deverá ser excluído: ')).zfill(6)
-    print('Feita a exclusão do produto:')
+    for chave in dictProduto.keys():
+        print(f'{chave}: {dictProduto[chave]}')
+    removeProduto = input('Digite o código do produto que deverá ser excluído: ')
+    print(dictProduto[removeProduto])
     dictProduto.pop(removeProduto)
+    print('Produto removido! Pressione uma tecla para seguir:')
+    menuPrincipal()
 
 #=-=-=-=-=-=-=-=-=-=EXCLUSÃO DE PRODUTOS=-=-=-=-=-=-=-=-=-=#
 def sairPrograma():
     os.system('cls')
     print('Programa encerrado!')
 
-menuPrincipal()
+#menuPrincipal()
+
+print(help(dict))
