@@ -22,7 +22,7 @@ cChaveProduto   -> Recebe a chave do produto que será alterado na função
                    'alterarProdutos'                                        (Caractere)
 '''
 
-dictProduto = {'000000': {'Nome': 'Bala', 'Peso': '50', 'UnidadeMedida': 'Uni', 'PrecoPadrao': '0.5', 'DescontoMaximo': '0'}, '000001': {'Nome': 'Chiclete', 'Peso': '40', 'UnidadeMedida': 'Uni', 'PrecoPadrao': '0.4', 'DescontoMaximo': '0'}, '000002': {'Nome': 'Brigadeiro', 'Peso': '1000', 'UnidadeMedida': 'Kg', 'PrecoPadrao': '5.0', 'DescontoMaximo': '15'}}
+dictProduto = {}
 
 #=-=-=-=-=-=-=-=-=-=MENU PRINCIPAL=-=-=-=-=-=-=-=-=-=#
 def menuPrincipal():
