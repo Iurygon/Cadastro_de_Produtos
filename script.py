@@ -1,5 +1,6 @@
 import os
 import time
+import pymssql                  #USADO PARA FAZER A CONEXÃO COM O MSSQL E ENVIAR OS DADOS
 '''
 VARIÁVEIS
 
