@@ -9,6 +9,15 @@ def conectaSQLServer(driver='driver',server='servidor',database='banco',username
 conexao, cursor = conectaSQLServer()
 
 def create(codigo, nome, unidadeMedida, precoPadrao, descontoMax):
-    cursor.execute(f"INSERT INTO PRODUTOS VALUES ({codigo}, {nome}, {unidadeMedida}, {precoPadrao}, {descontoMax})")
+    try:
+        cursor.execute(f"INSERT INTO PRODUTOS (CODIGO, NOME, UNIMEDIDA, PRECOPAD, DESCONTOMAX) VALUES('{codigo}', '{nome}', '{unidadeMedida}', {precoPadrao}, {descontoMax})")
+        conexao.commit()
+    except:
+        conexao.rollback()
 
-create('000001','Bala','Uni',0.50,0)
+def update(codigo, campo, novoValor):
+    try:
+        cursor.execute(f'UPDATE PRODUTOS SET {campo} = {novoValor} WHERE CODIGO = {codigo}')
+        cursor.commit()
+    except:
+        conexao.rollback()
