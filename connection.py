@@ -17,7 +17,20 @@ def create(codigo, nome, unidadeMedida, precoPadrao, descontoMax):
 
 def update(codigo, campo, novoValor):
     try:
-        cursor.execute(f'UPDATE PRODUTOS SET {campo} = {novoValor} WHERE CODIGO = {codigo}')
+        cursor.execute(f"UPDATE PRODUTOS SET {campo} = '{novoValor}' WHERE CODIGO = '{codigo}'")
         cursor.commit()
     except:
         conexao.rollback()
+
+def select(codigo=None):
+    if codigo is None:
+        resposta = cursor.execute('SELECT * FROM PRODUTOS (NOLOCK)')
+    else:
+        resposta = cursor.execute(f"SELECT * FROM PRODUTOS (NOLOCK) WHERE CODIGO = '{codigo}'")
+    row = resposta.fetchall()
+    print(f"{'CODIGO'.ljust(15)} | {'NOME'.ljust(15)} | {'UNIMEDIDA'.ljust(15)} | {'PRECOPAD'.ljust(15)} | {'DESCONTOMAX'.ljust(15)}")
+    for tuple in row:
+        print(f'{str(tuple[0]).ljust(15)} | {str(tuple[1]).ljust(15)} | {str(tuple[2]).ljust(15)} | {str(tuple[3]).ljust(15)} | {str(tuple[4]).ljust(15)}')
+
+def delete(codigo):
+    cursor.execute(f"DELETE FROM PRODUTOS WHERE CODIGO = '{codigo}'")
