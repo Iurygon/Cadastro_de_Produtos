@@ -4,7 +4,6 @@ import connection
 '''
 VARIÁVEIS
 
-dictProduto     -> Dicionário onde os dados dos produtos serão inseridos    (Dicionário)
 nOpcaoMenu      -> Indica qual opção o usuário deseja no menu principal.    (Numérico)
 nCodProduto     -> Variável incremental para o código do produto            (Numérico)
 cNomeProduto    -> Nome do produto                                          (Caractere)
@@ -23,8 +22,6 @@ cChaveProduto   -> Recebe a chave do produto que será alterado na função
 cCampoAlterado  -> Informa qual campo da tabela de registro do produto deve
                    ser alterado                                             (Caractere)
 '''
-
-dictProduto = {}
 
 #=-=-=-=-=-=-=-=-=-=MENU PRINCIPAL=-=-=-=-=-=-=-=-=-=#
 def menuPrincipal():
